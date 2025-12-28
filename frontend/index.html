@@ -1,0 +1,88 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruthLens – Verify Before You Share</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="home">
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="28" stroke="#d4af37" stroke-width="4"/>
+      <circle cx="32" cy="32" r="12" stroke="#d4af37" stroke-width="3"/>
+      <line x1="45" y1="45" x2="60" y2="60" stroke="#d4af37" stroke-width="4"/>
+    </svg>
+    TruthLens
+  </div>
+
+  <ul>
+    <li onclick="scrollToSection('home')">Home</li>
+    <li onclick="scrollToSection('how')">How It Works</li>
+    <li onclick="scrollToSection('impact')">Impact</li>
+    <li onclick="scrollToSection('demo')">Demo</li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>See the Truth Before You Share</h1>
+  <p>
+    TruthLens is a rule-based information verification tool that empowers users to
+    evaluate the credibility of online content without censorship.
+  </p>
+  <button class="cta-btn" onclick="scrollToSection('demo')">
+    Check Credibility
+  </button>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <h2 class="section-title">How TruthLens Works</h2>
+  <div class="cards">
+    <div class="card">Source credibility analysis</div>
+    <div class="card">Pattern & language checks</div>
+    <div class="card">Transparent scoring</div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <h2 class="section-title">Real-World Impact</h2>
+  <div class="cards">
+    <div class="card">Prevents misinformation</div>
+    <div class="card">No censorship</div>
+    <div class="card">Journalist & public friendly</div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo">
+  <h2 class="section-title">Live Credibility Check</h2>
+
+  <div class="demo-box">
+    <input type="text" id="newsInput" placeholder="Paste news URL or text here">
+    <button class="cta-btn" onclick="checkCredibility()">Analyze</button>
+
+    <div id="meter" class="meter"></div>
+    <div id="summary" class="summary"></div>
+  </div>
+</section>
+
+<footer>
+  © 2025 TruthLens | Built for Hackathons & Digital Trust
+</footer>
+
+<!-- External JS -->
+<script src="script.js"></script>
+</body>
+</html>
