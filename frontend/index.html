@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake News Verification Tool</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+            transition: 0.3s;
+        }
+        body.dark {
+            background: #1e1e1e;
+            color: #f5f5f5;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .reason {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Fake News Verification Tool</h2>
+
+<button onclick="toggleDark()">Toggle Dark Mode</button><br><br>
+
+<input type="text" id="url" placeholder="Paste news URL (optional)">
+<textarea id="content" placeholder="Paste news content (optional)"></textarea>
+
+<button onclick="verify()">Check Credibility</button>
+
+<div id="result"></div>
+
+<script>
+function toggleDark() {
+    document.body.classList.toggle("dark");
+}
+
+async function verify() {
+    const url = document.getElementById("url").value;
+    const content = document.getElementById("content").value;
+
+    if (!url && !content) {
+        alert("Please enter text or URL");
+        return;
+    }
+
+    document.getElementById("result").innerHTML = "Analyzing...";
+
+    const res = await fetch("http://127.0.0.1:5001/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, content })
+    });
+
+    const data = await res.json();
+
+    let color = "#d4edda";
+    if (data.score < 5) color = "#f8d7da";
+    else if (data.score < 7) color = "#fff3cd";
+
+    let html = `<div style="background:${color}">`;
+    html += `<h3>Credibility Score: ${data.score}/10</h3>`;
+    html += `<b>Summary:</b> ${data.summary}<br><br>`;
+
+    if (data.reasons.length > 0) {
+        html += "<b>Reasons:</b><ul>";
+        data.reasons.forEach(r => {
+            html += `<li class="reason">${r}</li>`;
+        });
+        html += "</ul>";
+    } else {
+        html += "<p>No major credibility issues detected.</p>";
+    }
+
+    html += "</div>";
+    document.getElementById("result").innerHTML = html;
+}
+</script>
+
+</body>
+</html>
