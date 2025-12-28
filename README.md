@@ -1,29 +1,15 @@
-# Confluence 1.0 Hackathon Project
+# Fake News Credibility Checker
 
-## Problem Statement
-Briefly describe the problem you are trying to solve.
+## Problem
+During crisis situations, fake news spreads rapidly and causes panic.
 
-## Proposed Solution
-Explain your idea in simple words.
-What does your project do? How does it help?
+## Solution
+A rule-based decision-support tool that helps users evaluate the credibility of news using transparent indicators like source reliability and language patterns.
 
 ## Tech Stack
-- Frontend:
-- Backend:
-- Database (if any):
-- Tools/Platforms:
+- Backend: Python (Flask)
+- Frontend: HTML/CSS/JS (demo UI)
+- Logic: Rule-based analysis
 
-## Current Progress
-- Idea finalized
-- Initial design completed
-- Basic functionality implemented
-
-## Expected Outcome
-What impact will your solution create?
-Who will benefit from it?
-
-## Team Members
-- Your Name (Role)
-
-## GitHub Repository
-This repository contains the project code and related resources for the Confluence 1.0 Hackathon.
+## Disclaimer
+This tool provides guidance only and does not guarantee accuracy.
