@@ -1,8 +1,8 @@
-##🔍TruthLens — Misinformation Detection & News Credibility Analyzer
+🔍TruthLens — Misinformation Detection & News Credibility Analyzer
 
 “In an era where misinformation spreads faster than facts, TruthLens helps users see the truth clearly.”
 
-##🚀 Project Overview
+🚀 Project Overview
 
 TruthLens is a web-based news verification and misinformation detection tool designed to evaluate the credibility of news articles in real time.
 It combines rule-based analysis, source credibility scoring, language pattern detection, and cross-source comparison to help users make informed decisions before consuming or sharing news.
@@ -10,7 +10,7 @@ It combines rule-based analysis, source credibility scoring, language pattern de
 This project was built to address a real-world problem:
 👉 the rapid spread of fake or misleading news across digital platforms.
 
-##❓ Problem Statement
+❓ Problem Statement
 
 With the exponential growth of online media:
 
@@ -105,6 +105,7 @@ regex – Language pattern analysis
 Flask – Backend server
 
 Postman – API testing
+
 ##how to run
 1.Install dependence: 'pip install -r requirements.txt'
 2.Go to backend folder 
