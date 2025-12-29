@@ -1,88 +1,111 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TruthLens – Verify Before You Share</title>
+<meta charset="UTF-8">
+<title>TruthLens | News Verification</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
+<!-- Google Fonts: Cinzel for title, Inter for other text -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body id="home">
+<body>
 
-<!-- NAVBAR -->
-<nav>
-  <div class="logo">
-    <svg viewBox="0 0 64 64" fill="none">
-      <circle cx="32" cy="32" r="28" stroke="#d4af37" stroke-width="4"/>
-      <circle cx="32" cy="32" r="12" stroke="#d4af37" stroke-width="3"/>
-      <line x1="45" y1="45" x2="60" y2="60" stroke="#d4af37" stroke-width="4"/>
-    </svg>
-    TruthLens
-  </div>
+<!-- Dark/Light mode toggle -->
+<button id="toggle-mode" onclick="toggleMode()">🌙</button>
 
-  <ul>
-    <li onclick="scrollToSection('home')">Home</li>
-    <li onclick="scrollToSection('how')">How It Works</li>
-    <li onclick="scrollToSection('impact')">Impact</li>
-    <li onclick="scrollToSection('demo')">Demo</li>
-  </ul>
-</nav>
+<!-- Particle background -->
+<div class="particles"></div>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>See the Truth Before You Share</h1>
-  <p>
-    TruthLens is a rule-based information verification tool that empowers users to
-    evaluate the credibility of online content without censorship.
-  </p>
-  <button class="cta-btn" onclick="scrollToSection('demo')">
-    Check Credibility
-  </button>
+<div class="container">
+
+<!-- ================= HERO SECTION ================= -->
+<div class="card hero-card" style="margin-bottom:40px;">
+    <h1 class="animated-title">TruthLens</h1>
+    <p class="subtitle">
+        TruthLens is a transparent, rule-based misinformation verification tool  
+        designed to help users evaluate online content credibility before sharing.
+    </p>
 </div>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <h2 class="section-title">How TruthLens Works</h2>
-  <div class="cards">
-    <div class="card">Source credibility analysis</div>
-    <div class="card">Pattern & language checks</div>
-    <div class="card">Transparent scoring</div>
-  </div>
-</section>
+<!-- ================= HOW IT WORKS ================= -->
+<div class="card" style="margin-bottom:40px;">
+    <h2 style="color:var(--gold); margin-bottom:16px;">How It Works</h2>
+    <div class="timeline">
+        <div class="step pass">
+            <div class="step-title">Source Evaluation</div>
+            <div class="step-desc">Checks the credibility of the news publisher</div>
+        </div>
+        <div class="step pass">
+            <div class="step-title">Language Analysis</div>
+            <div class="step-desc">Detects sensational or misleading wording</div>
+        </div>
+        <div class="step pass">
+            <div class="step-title">Rule-Based Scoring</div>
+            <div class="step-desc">Generates a transparent credibility score</div>
+        </div>
+    </div>
+</div>
 
-<!-- IMPACT -->
-<section id="impact">
-  <h2 class="section-title">Real-World Impact</h2>
-  <div class="cards">
-    <div class="card">Prevents misinformation</div>
-    <div class="card">No censorship</div>
-    <div class="card">Journalist & public friendly</div>
-  </div>
-</section>
+<!-- ================= REAL WORLD IMPACT ================= -->
+<div class="card" style="margin-bottom:40px;">
+    <h2 style="color:var(--gold); margin-bottom:16px;">Real-World Impact</h2>
+    <div class="timeline">
+        <div class="step pass">
+            <div class="step-title">Reduces Panic</div>
+            <div class="step-desc">Prevents viral spread of unverified emergency news</div>
+        </div>
+        <div class="step pass">
+            <div class="step-title">Encourages Critical Thinking</div>
+            <div class="step-desc">Assists users without enforcing censorship</div>
+        </div>
+        <div class="step pass">
+            <div class="step-title">Supports Journalists & Citizens</div>
+            <div class="step-desc">Acts as a decision-support verification layer</div>
+        </div>
+    </div>
+</div>
 
-<!-- DEMO -->
-<section id="demo">
-  <h2 class="section-title">Live Credibility Check</h2>
+<!-- ================= EXISTING CREDIBILITY CHECKER ================= -->
+<div class="card">
 
-  <div class="demo-box">
-    <input type="text" id="newsInput" placeholder="Paste news URL or text here">
-    <button class="cta-btn" onclick="checkCredibility()">Analyze</button>
+    <h2 style="color:var(--gold); margin-bottom:12px;">
+        Check News Credibility
+    </h2>
 
-    <div id="meter" class="meter"></div>
-    <div id="summary" class="summary"></div>
-  </div>
-</section>
+    <input id="url" placeholder="Paste news article URL (optional)">
+    <textarea id="content" rows="4" placeholder="Or paste news content here..."></textarea>
 
-<footer>
-  © 2025 TruthLens | Built for Hackathons & Digital Trust
-</footer>
+    <button onclick="verify()" class="glow-button">Verify with TruthLens</button>
 
-<!-- External JS -->
+    <div id="output"></div>
+
+</div>
+
+</div>
+
 <script src="script.js"></script>
+<script>
+/* Dark/Light mode toggle */
+function toggleMode() {
+    document.body.classList.toggle('light-mode');
+    const btn = document.getElementById('toggle-mode');
+    btn.textContent = document.body.classList.contains('light-mode') ? '🌞' : '🌙';
+}
+
+/* Particle parallax effect */
+const particles = document.querySelector('.particles');
+window.addEventListener('scroll', () => {
+    const offset = window.scrollY;
+    particles.style.transform = `translateY(${offset * 0.2}px)`; // parallax speed
+});
+
+/* Interactive particles on cursor */
+document.addEventListener('mousemove', (e) => {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    particles.style.backgroundPosition = `${x * 100}px ${y * 100}px`;
+});
+</script>
 </body>
 </html>
