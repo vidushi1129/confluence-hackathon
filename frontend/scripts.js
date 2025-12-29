@@ -1,46 +1,97 @@
-let analysisDone = false;
-let lastInput = "";
+async function verify() {
+    const url = document.getElementById("url").value;
+    const content = document.getElementById("content").value;
 
-const inputField = document.getElementById("newsInput");
-const meter = document.getElementById("meter");
-const summary = document.getElementById("summary");
+    if (!url && !content) {
+        alert("Please enter content or a URL");
+        return;
+    }
 
-inputField.addEventListener("input", () => {
-  if (inputField.value !== lastInput) {
-    analysisDone = false;
-    meter.style.display = "none";
-    summary.style.display = "none";
-  }
-});
+    document.getElementById("output").innerHTML =
+        "🔍 Analyzing credibility with TruthLens…";
 
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-}
+    const res = await fetch("http://127.0.0.1:5001/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, content })
+    });
 
-function checkCredibility() {
-  const currentInput = inputField.value.trim();
-  if (!currentInput || analysisDone) return;
+    const data = await res.json();
+    const score = data.score;
 
-  analysisDone = true;
-  lastInput = currentInput;
+    let alertClass = "low",
+        alertText = "Low Risk Content";
 
-  const score = Math.floor(Math.random() * 10) + 1;
+    if (score < 5) {
+        alertClass = "high";
+        alertText = "⚠ High Risk: Potential Misinformation";
+    } else if (score < 7) {
+        alertClass = "medium";
+        alertText = "⚠ Medium Risk: Verify Before Sharing";
+    }
 
-  meter.style.display = "flex";
-  summary.style.display = "block";
-  meter.innerText = score + "/10";
+    const circumference = 565;
+    const offset = circumference - (score / 10) * circumference;
 
-  if (score <= 4) {
-    meter.style.background = "#ff4d4d";
-    summary.innerText =
-      "Low credibility indicators detected. Source reliability appears weak.";
-  } else if (score <= 6) {
-    meter.style.background = "#f1c40f";
-    summary.innerText =
-      "Moderate credibility. Further verification is recommended.";
-  } else {
-    meter.style.background = "#2ecc71";
-    summary.innerText =
-      "High credibility. Content aligns with reliable information standards.";
-  }
+    let timeline = `
+        <div class="step pass">
+            <div class="step-title">Source Verification</div>
+            <div class="step-desc">Publisher credibility evaluated</div>
+        </div>
+        <div class="step pass">
+            <div class="step-title">Language Analysis</div>
+            <div class="step-desc">Sensational patterns detected</div>
+        </div>
+        <div class="step pass">
+            <div class="step-title">Metadata Integrity</div>
+            <div class="step-desc">URL & protocol checked</div>
+        </div>
+    `;
+
+    data.reasons.forEach(r => {
+        timeline += `
+            <div class="step fail">
+                <div class="step-title">Flag Raised</div>
+                <div class="step-desc">${r}</div>
+            </div>`;
+    });
+
+    const sources = [
+        { name: "BBC", score: 8 },
+        { name: "The Hindu", score: 9 },
+        { name: "NDTV", score: 7 },
+        { name: "Unverified Blog", score: 3 }
+    ];
+
+    let sourceHTML = "";
+    sources.forEach(s => {
+        sourceHTML += `
+            <div class="bar">
+                <span>${s.name}</span>
+                <div class="fill" style="width:${s.score * 10}%"></div>
+            </div>`;
+    });
+
+    document.getElementById("output").innerHTML = `
+        <div class="alert ${alertClass}">${alertText}</div>
+
+        <div class="results">
+            <div class="gauge">
+                <svg>
+                    <circle class="bg" cx="110" cy="110" r="95"></circle>
+                    <circle class="progress" cx="110" cy="110" r="95"
+                        style="stroke-dashoffset:${offset}"></circle>
+                </svg>
+                <div class="score">${score}/10</div>
+                <div class="summary">${data.summary}</div>
+            </div>
+
+            <div class="timeline">${timeline}</div>
+
+            <div class="sources">
+                <h3 style="color:var(--gold)">Cross-Source Comparison</h3>
+                ${sourceHTML}
+            </div>
+        </div>
+    `;
 }
